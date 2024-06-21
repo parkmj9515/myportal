@@ -50,6 +50,51 @@
 	    <artifactId>spring-webmvc</artifactId>
 	    <version>${springframework-version}</version>
 	</dependency>
+	
 
-  </dependencies>
+	 <!-- JSTL -->
+   <dependency>
+       <groupId>jakarta.servlet.jsp.jstl</groupId>
+       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+       <version>3.0.0</version>
+   </dependency>
+   
+   <dependency>
+       <groupId>org.glassfish.web</groupId>
+       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+       <version>3.0.1</version>
+   </dependency>
+   
+   <!-- Spring-JDBC -->
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+    <version>${springframework-version}</version>
+	</dependency>
+
+
+	<!-- OJDBC -->
+	<dependency>
+	    <groupId>com.oracle.database.jdbc</groupId>
+	    <artifactId>ojdbc11</artifactId>
+	    <version>23.4.0.24.05</version>
+	</dependency>
+	
+	<!-- MyBatis -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.5.16</version>
+	</dependency>
+
+	<!-- MyBatis-Spring -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+    	<version>3.0.3</version>
+	</dependency>
+
+
+   
+ </dependencies>
 </project>
