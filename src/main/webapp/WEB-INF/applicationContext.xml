@@ -15,7 +15,7 @@
            http://www.springframework.org/schema/aop/spring-aop.xsd">    
      <!-- 웹과 직접 연관 없는 BEAN들을 등록 -->
      	<context:annotation-config />
-     	<context:component-scan base-package="himedia/myportal">
+     	<context:component-scan base-package="himedia.myportal">
      		<!-- Repository, Service 등만 등록 -->
      		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
      		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />

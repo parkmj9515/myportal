@@ -20,8 +20,21 @@
     </context:component-scan>
     
     <!-- 정적 자원의 요청을 디폴트 서블릿으로 위임 -->
-    <mvc:annotation-driven />
-    	<mvc:default-servlet-handler/>
+    <mvc:annotation-driven>
+    	<!-- MessageConveter 등록 -->
+    	<mvc:message-converters>
+    		<bean 
+    			class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<!-- Map 타입을 json으로 변환해주는 Jackson Converter -->
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+    	</mvc:message-converters>
+    </mvc:annotation-driven>
+    <mvc:default-servlet-handler />
     	
     <!-- View Resolver -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
