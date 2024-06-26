@@ -4,6 +4,9 @@
 <%@ page session="true" %>    
 	<div id="header">
       <h1>My Homepage</h1>
+      <c:if test="${not empty errorMsg }" >
+      <h5>${errorMsg }</h5>
+      </c:if>
       <p>authUser: ${authUser }</p>
       <c:choose>
       <c:when test="${not empty authUser }">

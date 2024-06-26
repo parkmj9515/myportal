@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<!-- 게시물 작성 -->
+	<insert id="insert" parameterType="BoardVo">
+		<selectKey keyProperty="no" resultType="long" order="BEFORE">
+			SELECT seq_board_pk.nextval FROM dual
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO board (no,title,content,hit, reg_date, user_no)
+			values(#{no},#{title}, #{content}, 0, sysdate, #{userNo})
+		]]>
+	</insert>
+	
+	
+	<!-- 목록 -->
+	<select id="selectAll" resultType="boardVo">
+		select  b.no,
+				b.title,
+				b.content,
+				b.hit,
+				b.reg_date	as regDate,
+				b.user_no as userNo,
+				u.name as userName
+		from board b, users u
+		where b.user_no = u.no
+		ORDER BY regDate DESC
+	</select>
+	
+	<!-- 게시물 읽기 -->
+	<select id="getContent" parameterType="long" resultType="boardVo">
+		select b.no,
+				b.title,
+				b.content,
+				b.hit,
+				b.reg_date as regDate,
+				b.user_no as userNo,
+				u.name as userName
+		from board b, users u
+		where b.user_no = u.no AND
+				b.no = #{value}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseHitCount" parameterType="long">
+			update board 
+			set hit = hit +1
+			where no=#{value}
+	</update>
+	
+	<!-- 게시물 수정 -->
+	<update id="update" parameterType="boardVo">
+		update board
+		set title = #{title}, content=#{content}
+		where no=#{no}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteByUserNo" parameterType="map">
+		DELETE FROM board
+		WHERE no = #{no} AND user_no = #{userNo}
+	</delete>
+</mapper>
