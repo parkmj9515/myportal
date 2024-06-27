@@ -1,8 +1,8 @@
 package himedia.myportal.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -10,13 +10,15 @@ import himedia.myportal.exceptions.MainControllerException;
 
 @Controller
 public class MainController {
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
 	@GetMapping({ "/", "/main" })
 	public String main() {
+		logger.debug("마이포털 메인 페이지");
 //		return "/WEB-INF/views/home.jsp";
 		return "home";
 	}
-	
-	
+
 	@GetMapping("/except")
 	@ResponseBody
 	public String raiseExcept() {
@@ -25,14 +27,15 @@ public class MainController {
 		throw new MainControllerException("메인 컨트롤러에서 예외가 발생했습니다");
 	}
 
-	/* 버전.1.
-	@ExceptionHandler(RuntimeException.class)
-	@ResponseBody
-	public String handlerControllerException(RuntimeException e) {
-		return "Exception:" +e.getMessage();
-	}
-	*/
-	
+	/*
+	 * 버전.1.
+	 * 
+	 * @ExceptionHandler(RuntimeException.class)
+	 * 
+	 * @ResponseBody public String handlerControllerException(RuntimeException e) {
+	 * return "Exception:" +e.getMessage(); }
+	 */
+
 //	@ExceptionHandler(MainControllerException.class)
 //	public String handleControllerException(MainControllerException e,Model model) {
 //		model.addAttribute("name", e.getClass().getSimpleName());
@@ -40,5 +43,5 @@ public class MainController {
 //		
 //		return "errors/exception";
 //	}
-	
+
 }

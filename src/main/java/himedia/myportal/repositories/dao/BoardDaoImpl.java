@@ -5,39 +5,49 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import himedia.myportal.exceptions.BoardDaoException;
 import himedia.myportal.repositories.vo.BoardVo;
+
 @Repository("boardDao")
 public class BoardDaoImpl implements BoardDao {
+	private static final Logger logger = LoggerFactory.getLogger(BoardDaoImpl.class);
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	// 게시물 목록
-	@Override	
+	@Override
 	public List<BoardVo> selectAll() {
 		List<BoardVo> list = sqlSession.selectList("board.selectAll");
+		logger.debug(list.toString());
 		return list;
 	}
 
 	// 게스물 작성 액션
 	@Override
 	public int insert(BoardVo boardVo) {
+		logger.debug("게시물 작성 액션");
+		logger.debug("boardVo: " + boardVo);
 		try {
-			int insertedCount = sqlSession.insert("board.insert",boardVo);
-		return insertedCount;
-		} catch(Exception e) {
+			int insertedCount = sqlSession.insert("board.insert", boardVo);
+			logger.debug("삽입된 레코드 수: " + insertedCount);
+			return insertedCount;
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BoardDaoException("게시물 입력 중 예외 발생",boardVo);
+			logger.error("게시물 입력 중 예외 발생");
+			throw new BoardDaoException("게시물 입력 중 예외 발생", boardVo);
 		}
 	}
 
 	@Override
 	public BoardVo getContent(Long no) {
-
-		BoardVo boardVo = sqlSession.selectOne("board.getContent",no);
+		logger.debug("게시물 No: " + no);
+		BoardVo boardVo = sqlSession.selectOne("board.getContent", no);
+		logger.debug("게시물 Vo: " + boardVo);
 		return boardVo;
 	}
 
@@ -46,30 +56,29 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 			int updatedCount = sqlSession.update("board.update", boardVo);
 			return updatedCount;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BoardDaoException("게시물 업데이트 도중 예외 발생", boardVo);
 		}
-		
+
 	}
 
 	@Override
 	public int increaseHitCount(Long no) {
 		// 조회수 증가
-		return sqlSession.update("increaseHitCount",no);
+		return sqlSession.update("increaseHitCount", no);
 	}
 
-	
 	@Override
 	public int delete(Long no, Long userNo) {
 		try {
 			Map<String, Long> map = new HashMap<>();
-			map.put("no",no);
+			map.put("no", no);
 			map.put("userNo", userNo);
-		return sqlSession.delete("board.deleteByUserNo",map);
-		} catch(Exception e) {
+			return sqlSession.delete("board.deleteByUserNo", map);
+		} catch (Exception e) {
 			throw new BoardDaoException("삭제중 오류 발생");
 		}
 	}
-	
+
 }

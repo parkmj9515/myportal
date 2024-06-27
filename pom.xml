@@ -35,6 +35,13 @@
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-context</artifactId>
 	    <version>${springframework-version}</version>
+	    <!-- Logger 교체를 위해 기존 로거 제거 -->
+	    	<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 	</dependency>
 	
 	<!-- Spring Web -->
@@ -112,6 +119,22 @@
 	    <artifactId>jackson-databind</artifactId>
 	    <version>2.17.1</version>
 	</dependency>
+	
+	<!-- jcl Over slf4j -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>jcl-over-slf4j</artifactId>
+	    <version>2.0.13</version>
+	</dependency>
+
+	<!-- Log Back -->
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>1.5.6</version>
+	   <!-- <scope>test</scope> -->
+	</dependency>
+
    
  </dependencies>
 </project>
